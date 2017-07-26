@@ -27,7 +27,9 @@ function renderResult(result) {
 
 
 //  displayYouTubeSearchData function with (data) param
-
+function displayYouTubeSearchData(data) {
+    const results = data.items.map((item, index) => renderResult()
+}
 
 
 
