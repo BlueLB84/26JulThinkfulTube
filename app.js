@@ -17,9 +17,9 @@ function renderResult(result) {
     return `
     <div>
         <h3>
-        <a class="js-result-name" href="${result.html_url}" target="_blank">${result.name}</a>
-        by <a class="js-user-name" href="${result.owner.html_url}" target="_blank">${result.owner.login}</a></h3>
-        <p>Number of views: <span class="js-view-count">${result.view_count}</span></p>
+        <a class="js-result-name" href="#" target="_blank">${result.items[i].snippet.title}</a>
+        by <a class="js-user-name" href="#" target="_blank">${result.items[i].snippet.channelTitle}</a></h3>
+        <img src="${result.items[i].snippet.thumbnails.default.url}">
     </div>
     `;
 }
