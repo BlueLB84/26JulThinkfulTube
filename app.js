@@ -17,9 +17,9 @@ function renderResult(result) {
     return `
     <div>
         <h3>
-        <a class="js-result-name" href="#" target="_blank">${result.items[i].snippet.title}</a>
-        by <a class="js-user-name" href="#" target="_blank">${result.items[i].snippet.channelTitle}</a></h3>
-        <img src="${result.items[i].snippet.thumbnails.default.url}">
+        <a class="js-result-name" href="https://youtu.be/${result.}" target="_blank">${result.snippet.title}</a>
+        by <a class="js-user-name" href="https://www.youtube.com/channel/${result.snippet.channelId}" target="_blank">${result.snippet.channelTitle}</a></h3>
+        <img src="${result.snippet.thumbnails.default.url}">
     </div>
     `;
 }
@@ -28,10 +28,21 @@ function renderResult(result) {
 
 //  displayYouTubeSearchData function with (data) param
 function displayYouTubeSearchData(data) {
-    const results = data.items.map((item, index) => renderResult()
+    const results = data.items.map((item, index) => renderResult(item));
+    $('.js-search-results').html(results);
 }
 
 
 
 //  watchSubmit function for form input event listener
+function watchSubmit() {
+    $('.js-search-form').submit(event => {
+        event.preventDefault();
+        const queryTarget = $(event.currentTarget).find('.js-query');
+        const query = queryTarget.val();
+        queryTarget.val("");
+        getDataFromApi(query, displayYouTubeSearchData);
+    });
+}
 
+$(watchSubmit);
