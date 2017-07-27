@@ -8,7 +8,8 @@ function getDataFromApi(searchTerm, callback) {
         maxResults: 10,
         part: 'snippet',
         key: 'AIzaSyClJ6SxTfNrhYiUsnRPYrwEIhZWkTSN9Y8',
-        q: `${searchTerm}`
+        q: `${searchTerm}`,
+        order: 'viewCount'
     }
     $.getJSON(YOUTUBE_SEARCH_URL, query, callback);
 }
@@ -41,7 +42,7 @@ function renderChannelResult(result) {
 // renderPlaylistResult function with (result) param
 function renderPlaylistResult(result) {
     return `
-    <div class='result playlist-result'>
+    <div class="result playlist-result'>
         <h3>
         <a class="js-video-name" href="https://www.youtube.com/playlist?list=${result.id.playlistId}" target="_blank">${result.snippet.title}</a>
         by&nbsp<a class="js-video-channel-name" href="https://www.youtube.com/channel/${result.snippet.channelId}" target="_blank">${result.snippet.channelTitle}</a></h3>
