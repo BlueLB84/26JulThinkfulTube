@@ -5,6 +5,7 @@ const YOUTUBE_SEARCH_URL = 'https://www.googleapis.com/youtube/v3/search';
    and runs the getJSON request */
 function getDataFromApi(searchTerm, callback) {
     const query = {
+        maxResults: 10,
         part: 'snippet',
         key: 'AIzaSyClJ6SxTfNrhYiUsnRPYrwEIhZWkTSN9Y8',
         q: `${searchTerm}`
@@ -12,23 +13,61 @@ function getDataFromApi(searchTerm, callback) {
     $.getJSON(YOUTUBE_SEARCH_URL, query, callback);
 }
 
-// renderResult function with (result) param
-function renderResult(result) {
+// renderVideoResult function with (result) param
+function renderVideoResult(result) {
     return `
-    <div>
+    <div class= 'result video-result'>
         <h3>
-        <a class="js-result-name" href="https://youtu.be/${result.}" target="_blank">${result.snippet.title}</a>
-        by <a class="js-user-name" href="https://www.youtube.com/channel/${result.snippet.channelId}" target="_blank">${result.snippet.channelTitle}</a></h3>
-        <img src="${result.snippet.thumbnails.default.url}">
+        <a class="js-video-name" href="https://youtu.be/${result.id.videoId}" target="_blank">${result.snippet.title}</a>
+        by&nbsp<a class="js-video-channel-name" href="https://www.youtube.com/channel/${result.snippet.channelId}" target="_blank">${result.snippet.channelTitle}</a></h3>
+        <a class="js-video-thumbnail" href="#" target="_blank"><img src="${result.snippet.thumbnails.default.url}"></a>
+        <p>${result.snippet.description}</p>
     </div>
     `;
 }
 
+// renderChannelResult function with (result) param
+function renderChannelResult(result) {
+    return `
+    <div class='result channel-result'>
+        <h3>
+        <a class="js-video-name" href="https://www.youtube.com/channel/${result.snippet.channelId}" target="_blank">${result.snippet.title} YouTube Channel</a>
+        </h3>
+        <a class="js-video-thumbnail" href="https://www.youtube.com/channel/${result.snippet.channelId}" target="_blank"><img src="${result.snippet.thumbnails.default.url}"></a>
+    </div>
+    `;
+}
 
+// renderPlaylistResult function with (result) param
+function renderPlaylistResult(result) {
+    return `
+    <div class='result playlist-result'>
+        <h3>
+        <a class="js-video-name" href="https://www.youtube.com/playlist?list=${result.id.playlistId}" target="_blank">${result.snippet.title}</a>
+        by&nbsp<a class="js-video-channel-name" href="https://www.youtube.com/channel/${result.snippet.channelId}" target="_blank">${result.snippet.channelTitle}</a></h3>
+        <a class="js-video-thumbnail" href="https://www.youtube.com/playlist?list=${result.id.playlistId}" target="_blank"><img src="${result.snippet.thumbnails.default.url}"></a>
+    </div>
+    `;
+}
+
+// https://youtu.be/
 
 //  displayYouTubeSearchData function with (data) param
 function displayYouTubeSearchData(data) {
-    const results = data.items.map((item, index) => renderResult(item));
+    var ytChan = 'https://www.youtube.com/user/'
+    // var ytUrl = 'https://youtube.com/?v=' + videoId
+   
+    const results = data.items.map((item, index) => {
+        if(item.id.videoId) { 
+            return renderVideoResult(item);
+        }
+        if(item.id.channelId) { 
+            return renderChannelResult(item);
+        }
+        if(item.id.playlistId) { 
+            return renderPlaylistResult(item);
+        }
+    })
     $('.js-search-results').html(results);
 }
 

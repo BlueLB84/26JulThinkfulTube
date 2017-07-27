@@ -1,1 +1,47 @@
-/* some future css */
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+main {
+    width: 100%;
+    padding: 30px;
+    margin: 20px;
+}
+
+.js-search-results {
+    margin: 20px 10px;
+    padding: 20px;
+}
+
+.result {
+    width: 500px;
+    height: 175px;
+    padding: 10px;
+    margin-top: 20px;
+    background-color: whitesmoke;
+}
+
+.video-result {
+    border: 3px solid purple;
+}
+
+.channel-result {
+    border: 3px solid yellow;
+}
+
+.playlist-result {
+    border: 3px solid aqua;
+}
+
+img {
+    float: left;
+    margin-right: 10px;
+}
+
+/* .result p {
+    clear: right;
+    margin-left: 10px;
+} */
+
